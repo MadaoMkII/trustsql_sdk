@@ -4,7 +4,7 @@
 //import com.alibaba.fastjson.JSONObject;
 //import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.tencent.trustsql.sdk.bean.UserRequestModel;
+//import com.tencent.trustsql.sdk.module.beans.UserRequestModel;
 //import com.tencent.trustsql.sdk.config.Constants;
 //import com.tencent.trustsql.sdk.config.RestAPIURLConfig;
 //import com.tencent.trustsql.sdk.config.TrustSDK;

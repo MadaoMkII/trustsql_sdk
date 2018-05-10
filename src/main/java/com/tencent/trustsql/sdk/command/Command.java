@@ -16,7 +16,7 @@ public interface Command {
         signedMap.putAll(unsignedMap);
         signedMap.put("timestamp", System.currentTimeMillis() / 1000);
         signedMap.put("mch_sign",
-                      TrustSDK.signString(prvkey, SignStrUtil.mapToKeyValueStr(signedMap).getBytes(), false));
+                      TrustSDK.signString(prvkey, SignStrUtil.mapToKeyValueStr(signedMap).getBytes("UTF-8"), false));
 
 
         return signedMap;

@@ -3,7 +3,7 @@ package com.tencent.trustsql.sdk.command;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.trustsql.sdk.config.TrustSDK;
 import com.tencent.trustsql.sdk.algorithm.ECDSAAlgorithm;
-import com.tencent.trustsql.sdk.bean.PairKey;
+import com.tencent.trustsql.sdk.module.beans.PairKey;
 
 public class GeneratePairKeyCommand implements Command {
 

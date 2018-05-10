@@ -20,7 +20,7 @@ import com.alibaba.fastjson.parser.Feature;
 import com.tencent.trustsql.sdk.algorithm.AESAlgorithm;
 import com.tencent.trustsql.sdk.algorithm.DESAlgorithm;
 import com.tencent.trustsql.sdk.algorithm.ECDSAAlgorithm;
-import com.tencent.trustsql.sdk.bean.PairKey;
+import com.tencent.trustsql.sdk.module.beans.PairKey;
 import com.tencent.trustsql.sdk.exception.TrustSDKException;
 import com.tencent.trustsql.sdk.util.SignStrUtil;
 

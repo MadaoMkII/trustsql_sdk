@@ -2,7 +2,7 @@ package com.tencent.trustsql.sdk.command;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tencent.trustsql.sdk.bean.UserRequestModel;
+import com.tencent.trustsql.sdk.module.beans.UserRequestModel;
 
 public class TrustSqlCommand {
 
