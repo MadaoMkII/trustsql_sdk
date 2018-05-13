@@ -3,8 +3,7 @@ package com.tencent.trustsql.sdk.command;
 
 import com.alibaba.fastjson.JSONObject;
 
-import com.tencent.trustsql.sdk.config.CommonConfig;
-import com.tencent.trustsql.sdk.config.Config;
+import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.config.TrustSDK;
 import com.tencent.trustsql.sdk.util.HttpClientUtil;
 import com.tencent.trustsql.sdk.util.SignStrUtil;
@@ -20,7 +19,7 @@ import java.util.TreeMap;
 public class AssetTransferApplyCommand implements Command {
 
     @Autowired
-    private CommonConfig commonConfig;
+    private EnvironmentConfig commonConfig;
 
     @Override
     public String execute(String... args) throws Exception {
@@ -31,7 +30,7 @@ public class AssetTransferApplyCommand implements Command {
         Map<String, Object> paramMap = new TreeMap<>();
         paramMap.put("version", "1.0");
         paramMap.put("sign_type", "ECDSA");
-        paramMap.put("mch_id", commonConfig.getMchId());
+       // paramMap.put("mch_id", commonConfig.t());
         //paramMap.put("node_id", "nd_tencent_test4");
         paramMap.put("chain_id", "ch_tencent_test");
         paramMap.put("ledger_id", "ld_tencent_dam");

@@ -6,6 +6,7 @@ import com.tencent.trustsql.sdk.exception.TrustSDKException;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
+
 public class EncryptDES3Command implements Command {
 
 	@Override
@@ -20,5 +21,6 @@ public class EncryptDES3Command implements Command {
 		byte[] bytes = TrustSDK.encryptDES3(key, data.getBytes("UTF-8"));
 		return Base64.encodeBase64String(bytes);
 	}
+
 
 }

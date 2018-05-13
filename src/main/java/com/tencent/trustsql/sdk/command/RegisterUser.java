@@ -15,9 +15,9 @@ public class RegisterUser implements Command {
 
     @Override
     public String execute(String... arg) throws Exception {
-//        UserRequestModel userRequest=null;
-//        if (commonRequest instanceof UserRequestModel) {
-//             userRequest = (UserRequestModel) commonRequest;
+//        RegisterUserModel userRequest=null;
+//        if (commonRequest instanceof RegisterUserModel) {
+//             userRequest = (RegisterUserModel) commonRequest;
 //        } else {
 //            throw new RequestModelException();
 //        }

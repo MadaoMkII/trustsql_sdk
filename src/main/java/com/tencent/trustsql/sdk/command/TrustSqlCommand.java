@@ -2,14 +2,14 @@ package com.tencent.trustsql.sdk.command;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tencent.trustsql.sdk.module.beans.UserRequestModel;
+import com.tencent.trustsql.sdk.module.beans.RegisterUserModel;
 
 public class TrustSqlCommand {
 
     public String execute() throws Exception {
 
         ObjectMapper mapper = new ObjectMapper();
-        UserRequestModel userRequestModel = UserRequestModel.builder().mch_sign("ancde").build();
+        RegisterUserModel userRequestModel = RegisterUserModel.builder().seq_no("ancde").build();
 
         JsonNode node = mapper.convertValue(userRequestModel, JsonNode.class);
 

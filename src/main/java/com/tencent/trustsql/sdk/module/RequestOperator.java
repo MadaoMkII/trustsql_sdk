@@ -2,28 +2,34 @@ package com.tencent.trustsql.sdk.module;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tencent.trustsql.sdk.annotation.ParamsRequired;
-import com.tencent.trustsql.sdk.exception.ParamsNullException;
+
+import com.tencent.trustsql.sdk.annotation.ValueRequired;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 
 public interface RequestOperator {
 
-    default void validate() throws Exception {
+    default boolean validate() throws Exception {
 
-        Field[] fields = this.getClass().getDeclaredFields();
+        Field[] thisFields = this.getClass().getDeclaredFields();
+        Field[] superFields = this.getClass().getSuperclass().getDeclaredFields();
+
+        Field[] fields = Arrays.copyOf(thisFields, thisFields.length + superFields.length);
+
+        System.arraycopy(superFields, 0, fields, thisFields.length, superFields.length);
 
         for (Field field : fields) {
-            if (field.isAnnotationPresent(ParamsRequired.class)) {
-                ParamsRequired paramsRequired = field.getAnnotation(ParamsRequired.class);
+            if (field.isAnnotationPresent(ValueRequired.class)) {
+                ValueRequired paramsRequired = field.getAnnotation(ValueRequired.class);
                 if (paramsRequired.requrie()) {
                     // 如果类型是String
                     if (field.getGenericType().toString().equals(
                             "class java.lang.String")) { // 如果type是类类型，则前面包含"class "，后面跟类名
-                        // 拿到该属性的gettet方法
+                        // 拿到该属性的getter方法
                         /*
                           这里需要说明一下：他是根据拼凑的字符来找你写的getter方法的
                           在Boolean值的时候是isXXX（默认使用ide生成getter的都是isXXX）
@@ -36,19 +42,18 @@ public interface RequestOperator {
 
                         String val = (String) m.invoke(this);// 调用getter方法获取属性值
                         if (StringUtils.isEmpty(val)) {
-                            throw new ParamsNullException(field.getName() + " 不能为空!");
+                            System.out.println("Value lost is :" + field.getName());
+                            return false;
+                            //throw new ParamsNullException(field.getName() + " 不能为空!");
                         } else {
                             System.out.println("String type:" + val);
                         }
                     }
                 }
 
-            } else {
-
-                throw new ParamsNullException("Field is not String type");
-
             }
         }
+        return true;
     }
 
 

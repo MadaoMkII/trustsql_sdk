@@ -4,7 +4,7 @@
 //import com.alibaba.fastjson.JSONObject;
 //import com.fasterxml.jackson.databind.JsonNode;
 //import com.fasterxml.jackson.databind.ObjectMapper;
-//import com.tencent.trustsql.sdk.module.beans.UserRequestModel;
+//import com.tencent.trustsql.sdk.module.beans.RegisterUserModel;
 //import com.tencent.trustsql.sdk.config.Constants;
 //import com.tencent.trustsql.sdk.config.RestAPIURLConfig;
 //import com.tencent.trustsql.sdk.config.TrustSDK;
@@ -32,7 +32,7 @@
 //        //					ErrorNum.INVALID_PARAM_ERROR.getRetMsg());
 //        //		}
 //
-//        UserRequestModel userRequest = new UserRequestModel();
+//        RegisterUserModel userRequest = new RegisterUserModel();
 //
 //        //		// {\"mchId\":\"gba363879924b43db\",\"prvKey\":\"xhQ+g2qvtW+Y6oRd2+UHkQ9J5S7pZvqc9lw0l1xr0Is=\",
 //        // \"version\":\"1.0\",\"node_id\":\"nded6c6ea234da385\",\"chain_id\":\"ched6c6ea234da385\",
