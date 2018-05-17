@@ -6,25 +6,28 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.config.TrustSDK;
 import com.tencent.trustsql.sdk.util.SignStrUtil;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 @Setter
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
-public class RegisterUserModel extends BaseRequestModel {
+public class RegisterUserAccountModel extends BaseRequestModel {
 
 
     @Builder
     @JsonCreator
-    public RegisterUserModel(String product_code, String user_fullName, String user_id) {
+    public RegisterUserAccountModel(String product_code, String user_id, String pubKey) {
         super("empty", "empty");
-        this.sign = null;
         this.product_code = product_code;
-        this.user_fullName = user_fullName;
+        this.type = "sign";
+        this.pubKey = pubKey;
         this.user_id = user_id;
 
     }
@@ -39,22 +42,21 @@ public class RegisterUserModel extends BaseRequestModel {
 
 
     @JsonProperty
-    private String type = "sign";
+    private String type;
 
 
     @JsonProperty
     private String req_data;
 
     @JsonIgnore
-    private String user_fullName;
-
-    @JsonIgnore
     private String user_id;
 
-    private void assembleReq_data(final String pubKey, final String user_fullName, final String user_id) {
+    @JsonIgnore
+    private String pubKey;
 
-        this.req_data = "{\"public_key\":\"" + pubKey + "\",\"user_fullName\":\"" + user_fullName + "\"," +
-                "\"user_id\":\"" + user_id + "\"}";
+    private String assembleReq_data(final String pubKey, final String user_id) {
+
+        return "{\"public_key\":\"" + pubKey + "\"," + "\"user_id\":\"" + user_id + "\"}";
 
     }
 
@@ -63,11 +65,12 @@ public class RegisterUserModel extends BaseRequestModel {
         super.initial_seq_no();
         super.initial_time_stamp();
         setMch_id(environmentConfig.getMch_id());
-        assembleReq_data(environmentConfig.getPubKey(), user_fullName, user_id);
-        ObjectMapper mapper = new ObjectMapper();
-        @SuppressWarnings("unchecked")
-        Map<String, Object> result = mapper.convertValue(this.toJsonNode(), Map.class);
-        this.sign = TrustSDK.signString(environmentConfig.getPriKey(),
-                                        SignStrUtil.mapToKeyValueStr(result).getBytes("UTF-8"), false);
+
+        @SuppressWarnings("unchecked") Map<String, Object> result = new ObjectMapper().convertValue(this.toJsonNode(), TreeMap.class);
+        result.put("req_data", assembleReq_data(pubKey, this.getUser_id()));
+        this.sign = TrustSDK.signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(),
+                                        false);
+        req_data = assembleReq_data(pubKey, this.getUser_id());
+
     }
 }

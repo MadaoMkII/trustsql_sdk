@@ -18,6 +18,8 @@ public class EnvironmentConfig {
 
     private String url;
 
+    private String priKey;
+    private String mch_id;
     private String pubKey;
 
 }

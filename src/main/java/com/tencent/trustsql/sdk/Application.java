@@ -1,8 +1,9 @@
 package com.tencent.trustsql.sdk;
 
-import com.tencent.trustsql.sdk.command.EncryptDES3Command;
-import com.tencent.trustsql.sdk.config.EnvironmentConfig;
-import com.tencent.trustsql.sdk.module.beans.RegisterUserModel;
+
+import com.tencent.trustsql.sdk.module.beans.RegisterUserAccountModel;
+
+import com.tencent.trustsql.sdk.service.TrustSqlRequestServiceImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -17,13 +18,16 @@ public class Application {
 
         System.out.println("Let's inspect the beans provided by Spring Boot:");
 
-        String[] beanNames = ctx.getBeanDefinitionNames();
+        // String[] beanNames = ctx.getBeanDefinitionNames();
 
 
-        EnvironmentConfig environmentConfig=  ctx.getBean(EnvironmentConfig.class);
+        TrustSqlRequestServiceImp environmentConfig = ctx.getBean(TrustSqlRequestServiceImp.class);
+
+        environmentConfig.registerUser(
+                RegisterUserAccountModel.builder().product_code("UC0079").user_id("RX78NT1").pubKey(
+                        "BAc72jJ+ZPXDVWt2ksz4vh+2bySDBfJGz+ByRQtrrE7nu/LUjWcOKTDT4cmZ8rW+NllhglNzMA7zSujT1FJxotg=").build());
 
 
-        System.out.println(environmentConfig.getTrustSqlRequestUrls().get("registerUser"));
     }
 
 }

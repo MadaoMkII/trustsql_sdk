@@ -3,22 +3,35 @@ package com.tencent.trustsql.sdk.module.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tencent.trustsql.sdk.annotation.ValueRequired;
+import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.module.RequestOperator;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Getter
 @Setter
-@AllArgsConstructor
-public class BaseRequestModel implements RequestOperator {
-
-
+@RequiredArgsConstructor
+public abstract class BaseRequestModel implements RequestOperator {
+    @NonNull
+    @ValueRequired
     private String time_stamp;
+    @NonNull
     @ValueRequired
     private String seq_no;
 
-    @JsonIgnore
-    private String operationName;
+    @ValueRequired
+    private String mch_id;
 
+
+    public void initial_time_stamp() {
+        this.time_stamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+    }
+
+    public void initial_seq_no() {
+        this.seq_no = System.currentTimeMillis() + "0000000000001700000";
+
+    }
 
 }

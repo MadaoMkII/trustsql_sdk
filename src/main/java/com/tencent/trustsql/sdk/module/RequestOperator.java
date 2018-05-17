@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import com.tencent.trustsql.sdk.annotation.ValueRequired;
+import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import org.springframework.util.StringUtils;
 
 import java.lang.reflect.Field;
@@ -65,6 +66,9 @@ public interface RequestOperator {
     //        items[0] = (byte) ((char) items[0] - 'a' + 'A');
     //        return new String(items);
     //    }
+
+
+    void finalizeModel(EnvironmentConfig environmentConfig) throws Exception;
 
     default JsonNode toJsonNode() {
 
