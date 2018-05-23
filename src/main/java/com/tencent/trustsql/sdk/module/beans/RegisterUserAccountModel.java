@@ -21,6 +21,19 @@ import java.util.TreeMap;
 public class RegisterUserAccountModel extends BaseRequestModel {
 
 
+    @JsonProperty
+    private String sign;
+    @JsonProperty
+    private String product_code;
+    @JsonProperty
+    private String type;
+    @JsonProperty
+    private String req_data;
+    @JsonIgnore
+    private String user_id;
+    @JsonIgnore
+    private String pubKey;
+
     @Builder
     @JsonCreator
     public RegisterUserAccountModel(String product_code, String user_id, String pubKey) {
@@ -31,28 +44,6 @@ public class RegisterUserAccountModel extends BaseRequestModel {
         this.user_id = user_id;
 
     }
-
-
-    @JsonProperty
-    private String sign;
-
-
-    @JsonProperty
-    private String product_code;
-
-
-    @JsonProperty
-    private String type;
-
-
-    @JsonProperty
-    private String req_data;
-
-    @JsonIgnore
-    private String user_id;
-
-    @JsonIgnore
-    private String pubKey;
 
     private String assembleReq_data(final String pubKey, final String user_id) {
 
@@ -65,12 +56,13 @@ public class RegisterUserAccountModel extends BaseRequestModel {
         super.initial_seq_no();
         super.initial_time_stamp();
         setMch_id(environmentConfig.getMch_id());
-
-        @SuppressWarnings("unchecked") Map<String, Object> result = new ObjectMapper().convertValue(this.toJsonNode(), TreeMap.class);
+        ObjectMapper mapper = new ObjectMapper();
+        @SuppressWarnings("unchecked")
+        Map<String, Object> result = mapper.convertValue(this.toJsonNode(), TreeMap.class);
         result.put("req_data", assembleReq_data(pubKey, this.getUser_id()));
-        this.sign = TrustSDK.signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(),
-                                        false);
-        req_data = assembleReq_data(pubKey, this.getUser_id());
+        this.sign = TrustSDK
+                .signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(), false);
+        req_data = (String) result.get("req_data");
 
     }
 }

@@ -24,14 +24,6 @@ public abstract class BaseRequestModel implements RequestOperator {
     private String mch_id;
 
 
-    public void initial_time_stamp() {
-        this.time_stamp = String.valueOf(System.currentTimeMillis() / 1000);
 
-    }
-
-    public void initial_seq_no() {
-        this.seq_no = System.currentTimeMillis() + "0000000000001700000";
-
-    }
 
 }

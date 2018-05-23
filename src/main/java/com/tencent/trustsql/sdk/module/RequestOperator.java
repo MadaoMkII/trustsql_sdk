@@ -2,7 +2,6 @@ package com.tencent.trustsql.sdk.module;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import com.tencent.trustsql.sdk.annotation.ValueRequired;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import org.springframework.util.StringUtils;
@@ -28,8 +27,8 @@ public interface RequestOperator {
                 ValueRequired paramsRequired = field.getAnnotation(ValueRequired.class);
                 if (paramsRequired.requrie()) {
                     // 如果类型是String
-                    if (field.getGenericType().toString().equals(
-                            "class java.lang.String")) { // 如果type是类类型，则前面包含"class "，后面跟类名
+                    if (field.getGenericType().toString()
+                            .equals("class java.lang.String")) { // 如果type是类类型，则前面包含"class "，后面跟类名
                         // 拿到该属性的getter方法
                         /*
                           这里需要说明一下：他是根据拼凑的字符来找你写的getter方法的
@@ -67,6 +66,15 @@ public interface RequestOperator {
     //        return new String(items);
     //    }
 
+    default String initial_time_stamp() {
+        return String.valueOf(System.currentTimeMillis() / 1000);
+
+    }
+
+    default String initial_seq_no() {
+        return System.currentTimeMillis() + "0000000000001700000";
+
+    }
 
     void finalizeModel(EnvironmentConfig environmentConfig) throws Exception;
 
