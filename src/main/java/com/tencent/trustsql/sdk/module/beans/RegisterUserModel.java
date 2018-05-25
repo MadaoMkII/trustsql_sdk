@@ -37,7 +37,7 @@ public class RegisterUserModel extends BaseRequestModel {
     @Builder
     @JsonCreator
     public RegisterUserModel(String product_code, String user_fullName, String user_id) {
-        super("empty", "empty");
+
         this.sign = null;
         this.product_code = product_code;
         this.user_fullName = user_fullName;

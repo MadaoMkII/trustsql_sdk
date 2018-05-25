@@ -18,7 +18,7 @@ public class TrustSqlRequestServiceImp {
     @Autowired
     private BaseDao baseDao;
 
-    public void registerUser(final BaseRequestModel baseRequestModel) throws Exception {
+    public void doRequest(final BaseRequestModel baseRequestModel) throws Exception {
 
         baseRequestModel.finalizeModel(environmentConfig);
 

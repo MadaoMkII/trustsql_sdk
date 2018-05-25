@@ -1,17 +1,15 @@
 package com.tencent.trustsql.sdk.module.beans;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tencent.trustsql.sdk.annotation.ValueRequired;
-import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.module.RequestOperator;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@NoArgsConstructor
 public abstract class BaseRequestModel implements RequestOperator {
     @NonNull
     @ValueRequired
@@ -22,8 +20,6 @@ public abstract class BaseRequestModel implements RequestOperator {
 
     @ValueRequired
     private String mch_id;
-
-
 
 
 }

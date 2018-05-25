@@ -1,7 +1,10 @@
 package com.tencent.trustsql.sdk.module.beans;
 
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.config.TrustSDK;
@@ -20,7 +23,24 @@ import java.util.TreeMap;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 
-public class IssAppendModel extends BaseRequestModel {
+public class IssQueryModel extends BaseRequestModel {
+
+
+    //{
+    //	"content": {
+    //		"owner": "ulegal"
+    //	},
+    //	"mch_id": "gbec7b7cece75c8a5",
+    //	"notes": {
+    //		"extInfo": "default"
+    //	},
+    //	"page_limit": "2",
+    //	"page_no": "1",
+    //	"sign_type": "ECDSA",
+    //	"timestamp": "1503648096",
+    //	"version": "1.0",
+    //	"mch_sign": "MEYCIQDCoCYth2zGer2Z/kliD11jRXGKqLqLNk/vo18js+CvRwIhANTQ3PbN9vj9YjmaB+rma2Sz0D+30WgZPOHAO9ysRsj1"
+    //}
 
     @JsonProperty
     private String accountPriKey;
@@ -35,7 +55,7 @@ public class IssAppendModel extends BaseRequestModel {
     private String chain_id;
     @JsonProperty
     private String ledger_id;
-    @JsonIgnore
+    @JsonProperty
     private String info_key;
 
     @JsonProperty
@@ -52,33 +72,58 @@ public class IssAppendModel extends BaseRequestModel {
     @JsonProperty
     private String account;
 
+    //区块高度	b_height	否	JsonObject	条件范围，区块高度范围
+    //记录时间	commit_time	否	JsonObject	条件范围，记录时间范围
+    @JsonProperty
+    private String range;
+
+    @JsonProperty
+    private String t_hash;
+
+    @JsonProperty
+    private int page_no;
+
+    @JsonProperty
+    private int page_limit;
+
     @JsonProperty
     private String public_key;
+
     @JsonProperty
     private String sign;
+
     @JsonProperty
     private String mch_sign;
 
     @Builder
     @JsonCreator
-    public IssAppendModel(String version, String node_id, String chain_id, String ledger_id, String info_version,
-                          String state, String content, String accountPriKey, String sign, String notes) {
+    public IssQueryModel(String time_stamp, String seq_no, String accountPriKey, String version, String sign_type,
+                         String node_id, String chain_id, String ledger_id, String info_key, String info_version,
+                         String state, String content, String notes, String commit_time, String account, String
+                                     range, String t_hash, int page_no, int page_limit, String public_key, String
+                                     sign, String mch_sign) {
 
+        this.accountPriKey = accountPriKey;
         this.version = version;
-        sign_type = "ECDSA";
+        this.sign_type = sign_type;
         this.node_id = node_id;
         this.chain_id = chain_id;
         this.ledger_id = ledger_id;
-
+        this.info_key = info_key;
         this.info_version = info_version;
         this.state = state;
         this.content = content;
-
         this.notes = notes;
-        this.accountPriKey = accountPriKey;
+        this.commit_time = commit_time;
+        this.account = account;
+        this.range = range;
+        this.t_hash = t_hash;
+        this.page_no = page_no;
+        this.page_limit = page_limit;
+        this.public_key = public_key;
         this.sign = sign;
+        this.mch_sign = mch_sign;
     }
-
 
     @Override
     public void finalizeModel(EnvironmentConfig environmentConfig) throws Exception {

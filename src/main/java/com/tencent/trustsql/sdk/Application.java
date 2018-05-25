@@ -21,15 +21,14 @@ public class Application {
 
         // String[] beanNames = ctx.getBeanDefinitionNames();
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode actualObj = mapper.readTree("{\"name\":\"ding\"}");
 
         TrustSqlRequestServiceImp environmentConfig = ctx.getBean(TrustSqlRequestServiceImp.class);
         IssAppendModel issAppendModel = IssAppendModel.builder().accountPriKey("12435").chain_id("ch_tencent_test").
-                content("{\"name\":\"ding\"}").info_version("1").notes(actualObj)
+                content("{\"name\":\"ding\"}").info_version("1").notes("{\"Tieile\":\"ding\"}")
                 .ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").sign(null).state("5").version("1.0").build();
 
         System.out.println(issAppendModel.getContent());
-         environmentConfig.registerUser(issAppendModel);
+        environmentConfig.doRequest(issAppendModel);
 
 
     }
