@@ -81,9 +81,9 @@ public class IssAppendModel extends BaseRequestModel {
 
 
     @Override
-    public void finalizeModel(EnvironmentConfig environmentConfig) throws Exception {
+    public Map<String, Object> finalizeModel(EnvironmentConfig environmentConfig) throws Exception {
         super.setSeq_no(initial_seq_no());
-        super.setTime_stamp(initial_time_stamp());
+        //super.setTime_stamp(initial_time_stamp());
         setMch_id(environmentConfig.getMch_id());
         ObjectMapper mapper = new ObjectMapper();
 
@@ -99,7 +99,7 @@ public class IssAppendModel extends BaseRequestModel {
         Map<String, Object> result = mapper.convertValue(this.toJsonNode(), TreeMap.class);
         this.sign = TrustSDK
                 .signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(), false);
-
+        return null;
 
     }
 

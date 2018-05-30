@@ -1,7 +1,6 @@
 package com.tencent.trustsql.sdk.module;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSONObject;
 import com.tencent.trustsql.sdk.annotation.ValueRequired;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import org.springframework.util.StringUtils;
@@ -9,6 +8,7 @@ import org.springframework.util.StringUtils;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 
 
 public interface RequestOperator {
@@ -66,8 +66,8 @@ public interface RequestOperator {
     //        return new String(items);
     //    }
 
-    default String initial_time_stamp() {
-        return String.valueOf(System.currentTimeMillis() / 1000);
+    default Long initial_time_stamp() {
+        return System.currentTimeMillis() / 1000;
 
     }
 
@@ -76,12 +76,12 @@ public interface RequestOperator {
 
     }
 
-    void finalizeModel(EnvironmentConfig environmentConfig) throws Exception;
+    Map<String, Object> finalizeModel(EnvironmentConfig environmentConfig) throws Exception;
 
-    default JsonNode toJsonNode() {
+    default String toJsonNode() {
 
-        ObjectMapper mapper = new ObjectMapper();
+        return JSONObject.toJSON(this).toString();
 
-        return mapper.convertValue(this, JsonNode.class);
+
     }
 }

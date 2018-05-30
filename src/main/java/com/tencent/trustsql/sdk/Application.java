@@ -1,9 +1,8 @@
 package com.tencent.trustsql.sdk;
 
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tencent.trustsql.sdk.module.beans.IssAppendModel;
+import com.tencent.trustsql.sdk.module.beans.IssueCashApplyModel;
 import com.tencent.trustsql.sdk.service.TrustSqlRequestServiceImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,14 +21,22 @@ public class Application {
         // String[] beanNames = ctx.getBeanDefinitionNames();
         ObjectMapper mapper = new ObjectMapper();
 
-        TrustSqlRequestServiceImp environmentConfig = ctx.getBean(TrustSqlRequestServiceImp.class);
-        IssAppendModel issAppendModel = IssAppendModel.builder().accountPriKey("12435").chain_id("ch_tencent_test").
-                content("{\"name\":\"ding\"}").info_version("1").notes("{\"Tieile\":\"ding\"}")
-                .ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").sign(null).state("5").version("1.0").build();
+        TrustSqlRequestServiceImp serviceImp = ctx.getBean(TrustSqlRequestServiceImp.class);
+        //        IssAppendModel issAppendModel = IssAppendModel.builder().accountPriKey("12435").chain_id
+        // ("ch_tencent_test").
+        //                content("{\"name\":\"ding\"}").info_version("1").notes("{\"Tieile\":\"ding\"}")
+        //                .ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").sign(null).state("5").version
+        // ("1.0").build();
 
-        System.out.println(issAppendModel.getContent());
-        environmentConfig.doRequest(issAppendModel);
 
+        IssueCashApplyModel issueCashApplyModel = IssueCashApplyModel.builder().amount(69825).asset_type("5")
+                .chain_id("ch_tencent_test").ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").unit("Li").
+                        owner_account("19jCbh8TMVTShGnrzVKLdD8fMpo5bry4pE").content("{\"test\":\"test\"}").build();
+
+
+        serviceImp.doRequest(issueCashApplyModel);
+
+        //System.out.println(new IssueApplyCommand().execute());
 
     }
 

@@ -52,7 +52,7 @@ public class RegisterUserAccountModel extends BaseRequestModel {
     }
 
     @Override
-    public void finalizeModel(EnvironmentConfig environmentConfig) throws Exception {
+    public Map<String, Object> finalizeModel(EnvironmentConfig environmentConfig) throws Exception {
         super.initial_seq_no();
         super.initial_time_stamp();
         setMch_id(environmentConfig.getMch_id());
@@ -63,6 +63,8 @@ public class RegisterUserAccountModel extends BaseRequestModel {
         this.sign = TrustSDK
                 .signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(), false);
         req_data = (String) result.get("req_data");
+
+        return null;
 
     }
 }
