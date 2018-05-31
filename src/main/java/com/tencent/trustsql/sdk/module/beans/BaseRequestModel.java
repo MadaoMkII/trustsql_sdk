@@ -13,7 +13,7 @@ import lombok.*;
 public abstract class BaseRequestModel implements RequestOperator {
     @NonNull
     @ValueRequired
-    private String time_stamp;
+    private Long time_stamp;
     @NonNull
     @ValueRequired
     private String seq_no;

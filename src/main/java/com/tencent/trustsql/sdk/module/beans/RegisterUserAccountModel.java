@@ -4,8 +4,6 @@ package com.tencent.trustsql.sdk.module.beans;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
-import com.tencent.trustsql.sdk.config.TrustSDK;
-import com.tencent.trustsql.sdk.util.SignStrUtil;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -46,25 +44,22 @@ public class RegisterUserAccountModel extends BaseRequestModel {
     }
 
     private String assembleReq_data(final String pubKey, final String user_id) {
-
-        return "{\"public_key\":\"" + pubKey + "\"," + "\"user_id\":\"" + user_id + "\"}";
+        this.req_data = "{\"public_key\":\"" + pubKey + "\"," + "\"user_id\":\"" + user_id + "\"}";
+        return req_data;
 
     }
 
     @Override
     public Map<String, Object> finalizeModel(EnvironmentConfig environmentConfig) throws Exception {
-        super.initial_seq_no();
-        super.initial_time_stamp();
+        super.setSeq_no(super.initial_seq_no());
+        super.setTime_stamp(super.initial_time_stamp());
         setMch_id(environmentConfig.getMch_id());
         ObjectMapper mapper = new ObjectMapper();
         @SuppressWarnings("unchecked")
-        Map<String, Object> result = mapper.convertValue(this.toJsonNode(), TreeMap.class);
+        Map<String, Object> result = mapper.convertValue(this, TreeMap.class);
         result.put("req_data", assembleReq_data(pubKey, this.getUser_id()));
-        this.sign = TrustSDK
-                .signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes(), false);
-        req_data = (String) result.get("req_data");
-
-        return null;
+        result.put("requestUrlParam", super.getRequestUrlParam());
+        return result;
 
     }
 }

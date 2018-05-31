@@ -4,13 +4,11 @@ package com.tencent.trustsql.sdk.repository;
 import com.alibaba.fastjson.JSONObject;
 import com.tencent.trustsql.sdk.config.EnvironmentConfig;
 import com.tencent.trustsql.sdk.config.TrustSDK;
-import com.tencent.trustsql.sdk.module.beans.IssueCashApplyModel;
 import com.tencent.trustsql.sdk.util.HttpClientUtil;
 import com.tencent.trustsql.sdk.util.SignStrUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.io.IOException;
 import java.util.Map;
 
 
@@ -24,11 +22,20 @@ public class TrustSqlInteractDaoImp implements BaseDao {
     public void submitRequest(final Map<String, Object> baseRequestResultMap) throws Exception {
         String requestUrlParam = baseRequestResultMap.get("requestUrlParam").toString();
         baseRequestResultMap.remove("requestUrlParam");
+        if (baseRequestResultMap.containsKey("type") && baseRequestResultMap.get("type").equals("sign")) {
+
+            baseRequestResultMap.put("sign", TrustSDK.signString(environmentConfig.getPriKey(),
+                                                                 SignStrUtil.mapToKeyValueStr(baseRequestResultMap)
+                                                                         .getBytes("UTF-8"), false));
+        } else {
+            baseRequestResultMap.put("mch_sign", TrustSDK.signString(environmentConfig.getPriKey(),
+                                                                     SignStrUtil.mapToKeyValueStr(baseRequestResultMap)
+                                                                             .getBytes("UTF-8"), false));
+        }
         String url = environmentConfig.getTrustSqlRequestUrls().get(requestUrlParam);
 
         System.out.println(url);
-        String prvKey = "tLjF8pkr36WBHanLGGTQRRTSQHZCzTxemH1MhwgCiDU=";
-        baseRequestResultMap.put("mch_sign", TrustSDK.signString(prvKey, SignStrUtil.mapToKeyValueStr(baseRequestResultMap).getBytes(), false));
+
         JSONObject postJson = new JSONObject();
         for (String key : baseRequestResultMap.keySet()) {
             postJson.put(key, baseRequestResultMap.get(key));

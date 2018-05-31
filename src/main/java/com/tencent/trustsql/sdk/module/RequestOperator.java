@@ -76,6 +76,11 @@ public interface RequestOperator {
 
     }
 
+    default String getRequestUrlParam() {
+        return this.getClass().getSimpleName().replace("Model", "").toLowerCase();
+
+    }
+
     Map<String, Object> finalizeModel(EnvironmentConfig environmentConfig) throws Exception;
 
     default String toJsonNode() {

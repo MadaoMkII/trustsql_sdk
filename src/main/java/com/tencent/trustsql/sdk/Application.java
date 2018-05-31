@@ -2,7 +2,7 @@ package com.tencent.trustsql.sdk;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tencent.trustsql.sdk.module.beans.IssueCashApplyModel;
+import com.tencent.trustsql.sdk.module.beans.RegisterUserAccountModel;
 import com.tencent.trustsql.sdk.service.TrustSqlRequestServiceImp;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,12 +29,16 @@ public class Application {
         // ("1.0").build();
 
 
-        IssueCashApplyModel issueCashApplyModel = IssueCashApplyModel.builder().amount(69825).asset_type("5")
-                .chain_id("ch_tencent_test").ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").unit("Li").
-                        owner_account("19jCbh8TMVTShGnrzVKLdD8fMpo5bry4pE").content("{\"test\":\"test\"}").build();
+        //        IssueCashApplyModel issueCashApplyModel = IssueCashApplyModel.builder().amount(69825).asset_type("5")
+        //                .chain_id("ch_tencent_test").ledger_id("ld_tencent_dam").node_id("nd_tencent_test4").unit
+        // ("Li").
+        //                        owner_account("19jCbh8TMVTShGnrzVKLdD8fMpo5bry4pE").content("{\"test\":\"test\"}")
+        // .build();
 
+        RegisterUserAccountModel registerUserAccountModel = RegisterUserAccountModel.builder().user_id("Aptx0086")
+                .product_code("UC0079").pubKey("A1UHp2NQpfduFV4TW3rFFNLkCB4UkLZj0HvRH+VErzR6").build();
 
-        serviceImp.doRequest(issueCashApplyModel);
+        serviceImp.doRequest(registerUserAccountModel);
 
         //System.out.println(new IssueApplyCommand().execute());
 

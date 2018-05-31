@@ -87,12 +87,9 @@ public class IssueCashApplyModel extends BaseRequestModel {
         @SuppressWarnings("unchecked")
         Map<String, Object> result = mapper.convertValue(this, TreeMap.class);
 
-        result.put("requestUrlParam","issuecashapply");
-        result.put("content",JSONObject.parse(this.content));
-//        this.mch_sign = TrustSDK
-//                .signString(environmentConfig.getPriKey(), SignStrUtil.mapToKeyValueStr(result).getBytes("UTF-8"),
-//                            false);
-//        result.put("mch_sign",this.mch_sign);
+        result.put("requestUrlParam", super.getRequestUrlParam());
+        result.put("content", JSONObject.parse(this.content));
+
         return result;
 
     }
